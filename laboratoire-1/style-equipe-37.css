@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 img {
     float : left;
     width: 200px;
@@ -65,4 +66,23 @@ p {
         width: 100%;
         height: auto;
     }
+=======
+#navigation{
+    background-color: azure;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+#titre{
+    display: flex;
+    flex-flow: ;
+}
+
+.item-navigation {
+    padding: 2rem;
+}
+
+.item-navigation:hover {
+    color: black;
+>>>>>>> Stashed changes
 }
