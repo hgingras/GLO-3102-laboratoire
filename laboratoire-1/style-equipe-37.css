@@ -18,7 +18,7 @@ img {
     margin: 10px;
     padding: 10px;
     width: 200px;
-    height: 200px;
+    height: 366px;
     object-fit: cover;
 }
 
@@ -38,7 +38,14 @@ p {
     display: flex;
 }
 
-@media (max-width: 735px) {
+
+.item-navigation {
+    padding: 3rem 5rem;
+    text-decoration: underline;
+    color: black;
+}
+
+@media screen and (max-width: 1024px) {
     #images {
         flex-direction: column;
         align-items: center;
@@ -53,17 +60,27 @@ p {
         width: 100%;
         height: auto;
     }
+    .item-navigation {
+        padding: 1rem;
+    }
 }
 
-@media (max-width: 200px) {
+@media screen and (max-width: 667px) and (min-width: 320px) {
+    #images {
+        flex-direction: column;
+        align-items: center;
+    }
     .image {
         width: 100%;
         height: auto;
     }
 
     img {
-        width: 100%;
+        width: 90%;
         height: auto;
+    }
+    .item-navigation {
+        padding: 0.5rem;
     }
 }
 
@@ -74,12 +91,12 @@ p {
     justify-content: space-evenly;
 }
 
-.item-navigation {
-    padding: 2rem 5rem;
-    text-decoration: underline;
-    color: black;
+.item-navigation:hover {
+    color: blue;
+    cursor: pointer;
 }
 
-.item-navigation:hover {
-    color: black;
+#button-commander{
+    display: flex;
+    justify-content: center;
 }
