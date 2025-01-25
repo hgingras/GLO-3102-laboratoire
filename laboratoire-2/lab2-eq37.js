@@ -1,3 +1,4 @@
+// Données de test (vous pouvez les remplacer par vos propres données)
 const items = [
     "Pâtes Carbonara",
     "Pizza Margherita",
@@ -8,6 +9,9 @@ const items = [
     "Couscous Royal",
     "Paella Valenciana"
 ];
+
+const searchInput = document.getElementById('searchInput');
+const dropdown = document.getElementById('dropdown');
 
 // Fonction pour filtrer les résultats
 function filterItems(searchTerm) {
@@ -21,8 +25,7 @@ function displayResults(results) {
     dropdown.innerHTML = '';
     
     if (results.length === 0) {
-        dropdown.style.display = 'none';
-        return;
+        noResults()
     }
 
     results.forEach(result => {
@@ -56,3 +59,13 @@ document.addEventListener('click', (e) => {
         dropdown.style.display = 'none';
     }
 });
+// Fonction reset de la recherche
+function reset(){
+    searchInput.value = "" ;
+    dropdown.innerHTML = "";   
+}
+
+// Afficher 'Pas de résultat' si la recherche est null
+function noResults() {
+    dropdown.innerText = "Pas de résultat...";
+}

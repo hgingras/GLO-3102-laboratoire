@@ -1,5 +1,7 @@
 /* Search wrapper styling */
 .search-wrapper {
+    display: flex;
+    flex-flow: row;
     position: relative;
     max-width: 400px;
     margin: 20px auto;
@@ -52,4 +54,8 @@
 /* Add a subtle divider between items */
 .dropdown-item:not(:last-child) {
     border-bottom: 1px solid #eee;
+}
+
+#reset-button {
+    background-color: #4CAF50;
 }
