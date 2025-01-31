@@ -1,0 +1,13 @@
+body {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+#toast-container {
+    display: flex;
+    flex-flow: column-reverse;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    
+}
