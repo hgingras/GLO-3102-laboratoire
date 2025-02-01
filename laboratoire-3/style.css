@@ -7,7 +7,30 @@ body {
     display: flex;
     flex-flow: column-reverse;
     position: fixed;
-    right: 0;
-    bottom: 0;
-    
+    top: 0;          /* Changed from bottom: 0 to top: 0 */
+    left: 50%;       /* Position at 50% from the left */
+    transform: translateX(-50%); /* Center the container */
+    padding: 20px;
+    gap: 10px;
+}
+
+/* Add styles for the toast elements */
+.toast {
+    padding: 15px 25px;
+    color: white;
+    border-radius: 5px;
+    min-width: 200px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.toast.error {
+    background-color: #ff4444;
+}
+
+.toast.success {
+    background-color: #00C851;
+}
+
+.toast.info {
+    background-color: #33b5e5;
 }

@@ -12,9 +12,12 @@ export class Toast {
         toast.innerText = this.text;
 
         //ajouter au container
-        
+        this.container.appendChild(toast);
 
         //detruire la toast
+        setTimeout(() => {
+            this.remove(toast);
+        }, 3000);
 
     }
 
