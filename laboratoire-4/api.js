@@ -1,6 +1,7 @@
 const API_URL = 'https://glo3102lab4.herokuapp.com';
+let URL = ""
 
-async function createUser() {
+export async function createUser() {
     const response = await fetch(`${API_URL}/users`, {
         method: 'POST',
         headers: {
@@ -8,39 +9,76 @@ async function createUser() {
         }
     });
     const data = await response.json();
-    return data.id;
+    URL = API_URL + "/" + data.id + "/tasks"
 }
 
-async function getTasks() {
-    const response = await fetch(`${API_URL}/ce40bb67-cac4-40a5-8761-69c047f20d65/tasks`);
+export async function getTasks() {
+    const response = await fetch(
+        URL,
+        {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    )
     const data = await response.json();
-    return data;
+    return data.tasks;
 }
 
-async function createTask(task) {
-    const response = await fetch(`${API_URL}/ce40bb67-cac4-40a5-8761-69c047f20d65/tasks`, {
+export async function createTask(name) {
+    const body = JSON.stringify({
+        name: name
+    })
+    const response = await fetch(
+        URL, 
+        {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(task)
-    });
-    const data = await response.json();
+        body: body
+        }
+    );
+    if(response.status !== 200) {
+        throw new Error("Could not add task");
+    }
+    const data = await getTasks();
     return data;
 }
 
-async function deleteTask(taskId) {
-    await fetch(`${API_URL}/ce40bb67-cac4-40a5-8761-69c047f20d65/tasks/${taskId}`, {
-        method: 'DELETE'
-    });
+export async function deleteTask(taskId) {
+    await fetch(
+        URL + "/" + taskId,
+        {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+    )
+    const data = await getTasks();
+    return data;
 }
 
-async function updateTask(taskId, task) {
-    await fetch(`${API_URL}/ce40bb67-cac4-40a5-8761-69c047f20d65/tasks/${taskId}`, {
+export async function updateTask(taskId, new_task) {
+    const body = JSON.stringify({
+        name : new_task
+    })
+    const response = await fetch(
+        URL + "/" + taskId, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(task)
+        body: body
     });
+
+    if(response.status !== 200) {
+        throw new Error("Could not update task");
+    }
+
+
+    const data = await getTasks();
+    return data;
 }

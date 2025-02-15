@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Labo 4</title>
     <link rel="stylesheet" href="style.css">
+    <script type="module">
+        import { start } from "/app.js";
+        await start();
+    </script>
 </head>
 <body>
     <header>
@@ -15,16 +19,15 @@
             <p>This is a simple dynamic web application.</p>
         </section>
         <section>
-            <form id="addTaskForm">
+         
                 <input type="text" id="taskDescription" placeholder="Enter task description" required>
-                <button type="submit">Add Task</button>
-            </form>
+                <button id="submit" type="button">Add Task</button>
+                <div id="newContent"></div>
+           
         </section>
     </main>
     <footer>
         <p>&copy; 2023 Labo 4</p>
     </footer>
-    <script src="api.js"></script>
-    <script src="app.js"></script>
 </body>
 </html>
