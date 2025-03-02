@@ -1,7 +1,7 @@
 <template>
   <section>
     <TasksInput :onAddTask="onAddTask"></TasksInput>
-    <Task ></Task>
+    <Task :tasks="tasks" :onModifyTask="onModifyTask" :onDeleteTask="onDeleteTask"></Task>
     <div id="error-msg" v-if="emptyInput">
       Task name connot be empty...
     </div>
@@ -24,6 +24,7 @@ const emptyInput = ref(false);
 
 onMounted(async () => {
   await api.createUser();
+  tasks.value = await api.getTasks();
 })
 
 const onAddTask = async (name) => {

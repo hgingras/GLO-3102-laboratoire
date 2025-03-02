@@ -41,9 +41,9 @@ export async function createTask(name) {
         }
     );
     
-    //if(response.status !== 200) {
-    //    throw new Error("Could not add task");
-    //}
+    if(response.status !== 200) {
+        throw new Error("Could not add task");
+    }
     
     const data = await getTasks();
     return data;
