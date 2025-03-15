@@ -21,10 +21,9 @@ export default {
     data() {
         return {
             day: "",
-            toDay: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+            toDay: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
         }
     }
-    
 }
 
 </script>
