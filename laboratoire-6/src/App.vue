@@ -1,16 +1,18 @@
 <template>
   <div>
     <Localisation :ville="ville" :province="province" />
+    <Weather :weather="weather"/>
   </div>
 </template>
 
 <script>
 import * as api from "./api.js";
 import Localisation from "./components/Localisation.vue";
+import Weather from "./components/Weather.vue";
+
 export default {
-  components: {
-    Localisation,
-  },
+  components: { Localisation, Weather},
+
   async created() {
     const weatherReport = await api.getWeather();
     this.ville = weatherReport.city_name;

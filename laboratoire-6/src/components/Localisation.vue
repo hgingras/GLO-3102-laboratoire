@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <h2 class="geolocalisation">
         {{ ville }}, {{ province }}
-    </div>
+    </h2>
 </template>
 
 <script>
@@ -12,5 +12,12 @@ export default {
 </script>
 
 <style>
+
+.geolocalisation {
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+
+}
 
 </style>

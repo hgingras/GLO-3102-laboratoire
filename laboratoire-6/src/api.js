@@ -1,7 +1,7 @@
 import * as geo from './geolocalisation.js';
 
 const BASEURL = 'http://api.weatherbit.io/v2.0/forecast/daily'
-const KEY = '02811187ab9941d4bf2fa2c4af12220f';
+const KEY = 'f8ab4241139e43e7a38da4e7ec3b075f';
 const jsonAppHeader = {"Content-Type": "application/json",};
 
 export async function getWeather() {
