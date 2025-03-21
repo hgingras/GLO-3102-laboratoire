@@ -41,7 +41,16 @@ app.get('/:userId/tasks', (req, res) => {
 app.post('/:userId/tasks', (req, res) => {
     const userId = req.params.userId;
     validateUser(userId, res, () => {
-        const name =
+        const name = req.body.name;
+        validateTaskName(name, res, () => {
+            const task = {
+                id : uuidv4(),
+                name: name
+            }
+            tasks[userId].push(task);
+            res.status(200).send(task);
+        });
+    });
 });
 
 
@@ -52,5 +61,13 @@ const validateUser = (userId, res, callback) => {
         callback();
     } else {
         res.status(400).send('User with id ' + userId + ' does not exist');
+    }
+}
+
+const validateTaskName = (name, res, callback) => {
+    if (name.length > 0 && name !== undefined) {
+        callback();
+    } else {
+        res.status(400).send('Task definition is invalid');
     }
 }
