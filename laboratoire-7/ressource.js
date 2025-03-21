@@ -53,7 +53,20 @@ app.post('/:userId/tasks', (req, res) => {
     });
 });
 
-
+//PUT update task
+app.put('/:userId/tasks/:taskId', (req, res) => {
+    const userId = req.params.userId;
+    validateUser(userId, res, () => {
+        validateTaskId(userId, req.params.taskId, res, () => {
+            const name = req.body.name;
+            validateTaskName(name, res, () => {
+                const task = tasks[userId].find(task => task.id === req.params.taskId);
+                task.name = name;
+                res.status(200).send(task);
+            });
+        });
+    });
+});
 
 
 const validateUser = (userId, res, callback) => {
@@ -69,5 +82,13 @@ const validateTaskName = (name, res, callback) => {
         callback();
     } else {
         res.status(400).send('Task definition is invalid');
+    }
+}
+
+const validateTaskId = (userId, taskId, res, callback) => {
+    if (tasks[userId].find(task => task.id === taskId)) {
+        callback();
+    } else {
+        res.status(400).send('Task with id ' + taskId + ' does not exist');
     }
 }
