@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io();
+        let username = "";
+
+
+        const chooseUnsername = async () => {
+            username = document.getElementById("username-input").value;
+
+            if(username) {
+                const response = await fetch("/username", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username: username
+                    })
+                })
+                if(response.ok) {
+                    const username_container = document.getElementById("username-input-container");
+                    username_container.style.display = "none";
+                    const app_container = document.getElementById("app-container");
+                    app_container.style.display = "block";
+                } else {
+                    const error_msg = document.getElementById("error-msg");
+                    error_msg.innerText = "Username already taken."
+                }
+            }
+        }
+        const sendChat = () => {
+            return
+        }
+    </script>
+</head>
+<body>
+    <div id="username-input-container">
+        <input type="text" id="username-input" placeholder="Choose a username">
+        <button onclick="chooseUnsername()">confirm</button>
+        <div id="error-msg" style="color: red;"></div>
+    </div>
+    <div id="app-container" style="display: none;">
+        <div id="chat-container" style="height: 15rem; border: solid black 2px; padding:0.5rem"></div>
+        <div>
+            <input type="text" id="chat-input">
+            <button onclick="sendChat">send</button>
+        </div>
+    </div>
+</body>
+</html>
