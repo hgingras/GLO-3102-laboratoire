@@ -24,10 +24,18 @@ app.post("/username", (req, res) => {
 })
 
 io.on("connection", (socket) => {
-    console.log(`New user with id ${socket.id} jsut connected`);
+    console.log(`New user with id ${socket.id} just connected`);
 
     socket.on("disconnect", () => {
         console.log("A user just disconnected")
     })
 
+    socket.on("new-chat", (msg) => {
+        console.log("New message: ", msg);
+        io.emit("update-chat", msg);
+    })
+
+    socket.on("new-connection", (msg) => {
+        io.emit('new-connection', msg);
+    })
 })

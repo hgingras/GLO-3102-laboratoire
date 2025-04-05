@@ -28,6 +28,9 @@
                     username_container.style.display = "none";
                     const app_container = document.getElementById("app-container");
                     app_container.style.display = "block";
+                    socket.emit("new-connection", {
+                        username: username
+                    })
                 } else {
                     const error_msg = document.getElementById("error-msg");
                     error_msg.innerText = "Username already taken."
@@ -35,8 +38,35 @@
             }
         }
         const sendChat = () => {
-            return
+            console.log("sendChat called")
+            const chat = document.getElementById("chat-input").value;
+            document.getElementById("chat-input").value = "";
+            if(chat) {
+                const msg = {
+                    username: username,
+                    chat: chat
+                }
+                socket.emit(
+                    "new-chat", msg
+                )
+            }
         }
+
+        socket.on("update-chat", (msg) => {
+            console.log(msg);
+            let newChat = document.createElement("div");
+            newChat.innerText = `${msg.username}: ${msg.chat}`;
+            const chatContainer = document.getElementById("chat-container");
+            chatContainer.appendChild(newChat);
+        })
+
+        socket.on("new-connection", (msg) => {
+            console.log(msg);
+            let newChat = document.createElement("div");
+            newChat.innerText = `${msg.username} has joined the chat.`;
+            const chatContainer = document.getElementById("chat-container");
+            chatContainer.appendChild(newChat);
+        })
     </script>
 </head>
 <body>
@@ -49,7 +79,7 @@
         <div id="chat-container" style="height: 15rem; border: solid black 2px; padding:0.5rem"></div>
         <div>
             <input type="text" id="chat-input">
-            <button onclick="sendChat">send</button>
+            <button onclick="sendChat()">send</button>
         </div>
     </div>
 </body>
