@@ -10,7 +10,8 @@ const PORT = 8080;
 const app = express();
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost/laboratoire10')
+//mongoose.connect('mongodb://localhost/laboratoire10')
+//mongoose.connect('mongodb+srv://helene:qwerty123@cluster92157.fmk9ghe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster92157/laboratoire10')
 
 const corsOption = {
     origin: '*',
@@ -40,7 +41,7 @@ app.post('/users', async (req, res) => {
         id = newUser._id;
     }
     res.status(200).send({
-        id: user
+        id
     })
 });
 
