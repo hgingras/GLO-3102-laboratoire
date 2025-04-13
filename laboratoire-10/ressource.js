@@ -25,10 +25,6 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     });
 
-
-let users = [];
-let tasks = {};
-
 //POST get user
 app.post('/users', async (req, res) => {
     const user = await User.findOne();
@@ -81,11 +77,11 @@ app.put('/:userId/tasks/:taskId', (req, res) => {
     const userId = req.params.userId;
     const taskId = req.params.taskId;
     validateUser(userId, res, () => {
-        validateTaskId(userId, taskId, res, () => {
+        validateTaskId(taskId, res, () => {
             const name = req.body.name;
-            validateTaskName(name, res, () => {
-                const task = editTask(name, taskId, userId)
-                res.status(200).send(task)
+            validateTaskName(name, res, async () => {
+                const task = await Task.findByIdAndUpdate(taskId, {name: name}, {new: true});
+                res.status(200).send(task.toDTO());
             });
         });
     });
@@ -96,21 +92,24 @@ app.delete('/:userId/tasks/:taskId', (req, res) => {
     const userId = req.params.userId;
     const taskId = req.params.taskId;
     validateUser(userId, res, () => {
-        validateTaskId(userId, taskId, res, () => {
-            let userTasks = tasks[userId];
-            const taskIndex = findIndex(taskId, userTasks);
-            userTasks.splice(taskIndex, 1);
+        validateTaskId(taskId, res, async () => {
+            await Task.findByIdAndDelete(taskId);
             res.status(204).send();
         });
     });
 });
 
 const validateUser = async (userId, res, callback) => {
-    const user = await User.findById(userId);
+    try{
+        const user = await User.findById(userId);
 
-    if (user) {
-        callback();
-    } else {
+        if (user) {
+            callback();
+        } else {
+            res.status(400).send('User with id ' + userId + ' does not exist');
+        }
+    } catch (error) {
+        console.error('Error validating user:', error);
         res.status(400).send('User with id ' + userId + ' does not exist');
     }
 }
@@ -123,31 +122,17 @@ const validateTaskName = (name, res, callback) => {
     }
 }
 
-const validateTaskId = (userId, taskId, res, callback) => {
-    if (tasks[userId].find(task => task.id === taskId)) {
-        callback();
-    } else {
+const validateTaskId = async (taskId, res, callback) => {
+    try{
+        const task = await Task.findById(taskId);
+        if (task) {
+            callback();
+        }
+        else {
+            res.status(400).send('Task with id ' + taskId + ' does not exist');
+        }
+    } catch (error) {
+        console.error('Error validating task:', error);
         res.status(400).send('Task with id ' + taskId + ' does not exist');
     }
-}
-
-const editTask = (name, taskId, user) => {
-    let userTasks = tasks[user];
-    const taskIndex = findIndex(taskId, userTasks);
-    const task = {
-        id: taskId,
-        name: name
-    }
-    userTasks[taskIndex] = task;
-    return task;
-}
-
-const findIndex = (taskId, userTasks) => {
-    let taskIndex = -1;
-    userTasks.forEach((task, index) => {
-        if(task.id === taskId) {
-            taskIndex = index
-        }
-    })
-    return taskIndex;
 }
